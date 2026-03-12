@@ -1,0 +1,10 @@
+{"sessionId":"03a4bc","location":"NuovoArticoloPage.jsx:onSubmit","message":"submit variantiValide","data":{"count":1,"firstBox":"ds2","firstBoxType":"string"},"timestamp":1773228719627,"hypothesisId":"H1"}
+{"sessionId":"03a4bc","location":"NuovoArticoloPage.jsx:onSubmit:payload","message":"payload varianti[0]","data":{"box":0,"boxType":"number"},"timestamp":1773228719628,"hypothesisId":"H3"}
+{"sessionId":"03a4bc","location":"index.js:POST articoli","message":"validation","data":{"ok":true,"firstBox":0},"timestamp":1773228719647,"hypothesisId":"H3"}
+{"sessionId":"03a4bc","location":"index.js:POST articoli:inserted","message":"insert ok","data":{"articoloId":12},"timestamp":1773228719676,"hypothesisId":"H3"}
+{"sessionId":"03a4bc","location":"NuovoArticoloPage.jsx:updateVarianteAutoAdd","message":"auto-add variant","data":{"prevBox":"exel1","newRowBox":"exel1"},"timestamp":1773228768482,"hypothesisId":"H2"}
+{"sessionId":"03a4bc","location":"NuovoArticoloPage.jsx:updateVarianteAutoAdd","message":"auto-add variant","data":{"prevBox":"exel1","newRowBox":"exel1"},"timestamp":1773228768483,"hypothesisId":"H2"}
+{"sessionId":"03a4bc","location":"NuovoArticoloPage.jsx:onSubmit","message":"submit variantiValide","data":{"count":1,"firstBox":"exel1","firstBoxType":"string"},"timestamp":1773228779048,"hypothesisId":"H1"}
+{"sessionId":"03a4bc","location":"NuovoArticoloPage.jsx:onSubmit:payload","message":"payload varianti[0]","data":{"box":0,"boxType":"number"},"timestamp":1773228779048,"hypothesisId":"H3"}
+{"sessionId":"03a4bc","location":"index.js:POST articoli","message":"validation","data":{"ok":true,"firstBox":0},"timestamp":1773228779054,"hypothesisId":"H3"}
+{"sessionId":"03a4bc","location":"index.js:POST articoli:inserted","message":"insert ok","data":{"articoloId":13},"timestamp":1773228779056,"hypothesisId":"H3"}

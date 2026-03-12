@@ -1,0 +1,1676 @@
+:root {
+  --bg: #0b1220;
+  --panel: #0f1a2d;
+  --panel2: #0c1527;
+  --text: #e8eefc;
+  --muted: #a9b7d8;
+  --border: rgba(255, 255, 255, 0.09);
+  --primary: #7c5cff;
+  --danger: #ff4d6d;
+  --success: #2bd576;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: radial-gradient(1200px 800px at 10% 10%, rgba(124, 92, 255, 0.25), transparent 55%),
+    radial-gradient(1200px 800px at 90% 30%, rgba(43, 213, 118, 0.17), transparent 55%),
+    var(--bg);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+input,
+button {
+  font: inherit;
+}
+
+.app {
+  min-height: 100vh;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+  background: rgba(11, 18, 32, 0.7);
+}
+
+.brand__title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+.brand__subtitle {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 4px;
+  letter-spacing: 0.01em;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: nowrap;
+  min-width: 0;
+}
+
+.nav__link {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  width: 56px;
+  min-width: 56px;
+  height: 50px;
+  min-height: 50px;
+  max-height: 50px;
+  box-sizing: border-box;
+  text-decoration: none;
+  color: var(--muted);
+  padding: 4px 6px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.nav__linkIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.nav__linkLabel {
+  font-size: 9px;
+  font-weight: 600;
+  line-height: 1.1;
+  text-align: center;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nav__link--active {
+  color: var(--text);
+  border-color: rgba(124, 92, 255, 0.6);
+  background: rgba(124, 92, 255, 0.12);
+  width: 56px;
+  min-width: 56px;
+  height: 50px;
+  min-height: 50px;
+  max-height: 50px;
+}
+
+@media (max-width: 640px) {
+  .topbar {
+    padding: 12px 14px;
+  }
+  .brand {
+    flex: 1 1 100%;
+    margin-bottom: 8px;
+  }
+  .brand__title {
+    font-size: 1.15rem;
+  }
+  .brand__subtitle {
+    font-size: 11px;
+  }
+  .nav {
+    flex-wrap: nowrap;
+    gap: 8px;
+    width: 100%;
+    justify-content: space-between;
+  }
+  .nav__link,
+  .nav__link--active {
+    flex: 1;
+    width: auto;
+    min-width: 0;
+    height: auto;
+    min-height: 44px;
+    max-height: none;
+    padding: 8px 6px;
+    gap: 2px;
+  }
+  .nav__linkLabel {
+    font-size: 9px;
+  }
+}
+
+.content {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 18px;
+}
+
+.page__title {
+  font-size: 20px;
+  font-weight: 800;
+  margin-top: 4px;
+  margin-bottom: 12px;
+  letter-spacing: 0.02em;
+}
+
+.hint {
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 14px;
+}
+
+.card {
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+}
+
+.grid {
+  display: grid;
+  gap: 12px;
+}
+
+.grid--2 {
+  grid-template-columns: 1fr 1fr;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field__label {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.field--full {
+  grid-column: 1 / -1;
+}
+
+.page--nuovo-articolo .card .grid--2 .field:nth-child(1) input,
+.page--nuovo-articolo .card .grid--2 .field:nth-child(2) input {
+  width: 150px;
+  max-width: 100%;
+}
+
+input[type="text"],
+input[type="number"],
+input:not([type]) {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text);
+  outline: none;
+}
+
+input:focus {
+  border-color: rgba(124, 92, 255, 0.65);
+  box-shadow: 0 0 0 3px rgba(124, 92, 255, 0.18);
+}
+
+.page--nuovo-articolo input {
+  display: flex;
+  flex-wrap: wrap;
+  width: 150px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.row--nowrap {
+  flex-wrap: nowrap;
+}
+
+.row--grow > input {
+  flex: 1;
+  min-width: 0;
+}
+
+.row--between {
+  justify-content: space-between;
+}
+
+.row--gap {
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.row--end {
+  justify-content: flex-end;
+  margin-top: 14px;
+}
+
+.btn {
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text);
+  padding: 10px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn--primary {
+  border-color: rgba(124, 92, 255, 0.55);
+  background: rgba(124, 92, 255, 0.15);
+}
+
+.btn--ghost {
+  background: transparent;
+}
+
+.btn--danger {
+  border-color: rgba(255, 77, 109, 0.55);
+  background: rgba(255, 77, 109, 0.14);
+}
+
+.btn--addVariant {
+  border-color: rgba(124, 92, 255, 0.55);
+  background: rgba(124, 92, 255, 0.12);
+  font-weight: 800;
+}
+
+.alert {
+  margin: 10px 0 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.alert--success {
+  border-color: rgba(43, 213, 118, 0.5);
+  background: rgba(43, 213, 118, 0.12);
+}
+
+.alert--error {
+  border-color: rgba(255, 77, 109, 0.5);
+  background: rgba(255, 77, 109, 0.12);
+}
+
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 14px 0;
+}
+
+.sectionTitle {
+  font-weight: 800;
+  font-size: 15px;
+}
+
+.preview {
+  margin-top: 10px;
+  max-width: 240px;
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.photoPicker__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.photoPicker {
+  width: 100%;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  padding: 14px 12px;
+  border-radius: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 56px;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.photoPicker:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.photoPicker__icon {
+  color: rgba(255, 255, 255, 0.7);
+  display: inline-flex;
+}
+
+.photoPicker__text {
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.photoPicker__badge {
+  margin-left: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  border: 1px solid rgba(43, 213, 118, 0.4);
+  background: rgba(43, 213, 118, 0.12);
+  color: #8cf599;
+}
+
+.variants {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.variantRow {
+  display: grid;
+  gap: 10px 12px;
+  grid-template-columns: 1fr 2fr 8ch 8ch auto;
+  grid-template-rows: auto auto;
+  align-items: center;
+  padding: 10px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.variantRow__cell {
+  min-height: 0;
+}
+
+.variantRow__colore {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.variantRow__colore input {
+  width: 90px;
+  max-width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text);
+  font: inherit;
+  box-sizing: border-box;
+}
+
+.variantRow__taglie {
+  grid-column: 2;
+  grid-row: 1 / -1;
+}
+
+.variantRow__quantita {
+  grid-column: 4;
+  grid-row: 1;
+}
+
+.variantRow__quantita input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text);
+  font: inherit;
+  box-sizing: border-box;
+  text-align: right;
+}
+
+.variantRow__box {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.variantRow__box input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text);
+  font: inherit;
+  box-sizing: border-box;
+  text-align: right;
+}
+
+.variantActions {
+  grid-column: 5;
+  grid-row: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.sizePicker {
+  display: grid;
+  gap: 8px;
+}
+
+.sizeRow {
+  display: flex;
+  gap: 8px;
+  flex-wrap: nowrap;
+}
+
+.sizeBtn {
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text);
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  min-width: 54px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.sizeBtn:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.sizeBtn--active {
+  border-color: rgba(124, 92, 255, 0.65);
+  background: rgba(232, 238, 252, 0.92);
+  color: #0b1220;
+}
+
+.linkBtn {
+  margin-top: 8px;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+.linkBtn:hover {
+  color: var(--text);
+}
+
+
+/* Lista articoli per fornitore – stile Excel compatto */
+.listExcel {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.listExcel__block {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.listExcel__headerRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.listExcel__header {
+  flex: 1;
+  border: 0;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text);
+  padding: 6px 10px;
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 10px;
+  align-items: center;
+  font-size: 13px;
+  text-align: left;
+}
+
+.listExcel__header:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.listExcel__fornitore {
+  font-weight: 700;
+}
+
+.listExcel__cliente {
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.listExcel__totals {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.listExcel__toggle {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.listExcel__body {
+  border-top: 1px solid var(--border);
+  padding: 0;
+}
+
+.listExcel__table {
+  font-size: 12px;
+}
+
+.listExcel__thead {
+  display: grid;
+  grid-template-columns: 35px 74px 1fr 58px 44px 72px;
+  gap: 0;
+  background: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid var(--border);
+}
+
+.listExcel__th {
+  padding: 4px 6px;
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 10px;
+  border-right: 1px solid var(--border);
+}
+
+.listExcel__th:last-child {
+  border-right: 0;
+}
+
+.listExcel__th--num {
+  text-align: right;
+}
+
+.listExcel__tr {
+  display: grid;
+  grid-template-columns: 35px 74px 1fr 58px 44px 72px;
+  gap: 0;
+  min-height: 75px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.listExcel__tr:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.listExcel__td {
+  padding: 3px 6px;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.listExcel__td:last-child {
+  border-right: 0;
+}
+
+.listExcel__td--img {
+  padding: 0 2px 2px 2px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  align-content: flex-start;
+  height: 75px;
+  min-width: 0;
+}
+
+.listExcel__imgBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  width: 100%;
+  min-width: 0;
+}
+
+.listExcel__thumb {
+  width: 34px;
+  height: 34px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.listExcel__noimg {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.listExcel__btnModificaArticolo {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 30px;
+  height: 30px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 0;
+  padding-right: 0;
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s, border-color 0.15s;
+}
+
+.listExcel__btnModificaArticolo:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.45);
+}
+
+.listExcel__btnModificaArticolo .listExcel__icon--pen {
+  flex-shrink: 0;
+}
+
+.listExcel__td--code {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  align-content: flex-start;
+  font-weight: 400;
+  white-space: normal;
+  min-width: 0;
+}
+
+.listExcel__td--desc {
+  display: flex;
+  flex-wrap: wrap;
+  white-space: normal;
+  min-width: 0;
+}
+
+.listExcel__td--num {
+  text-align: right;
+}
+
+.listExcel__td--value {
+  color: #8cf599;
+  font-weight: 700;
+}
+
+.listExcel__td--valueWithDelete {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 4px 6px;
+}
+
+.listExcel__td--valueWithDelete .listExcel__valueText {
+  color: #8cf599;
+  font-weight: 700;
+}
+
+.listExcel__btnEliminaArticolo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.75);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s, border-color 0.15s;
+}
+
+.listExcel__btnEliminaArticolo:hover {
+  color: var(--danger);
+  background: rgba(255, 77, 109, 0.2);
+  border-color: rgba(255, 77, 109, 0.4);
+}
+
+.listExcel__btnEliminaArticolo .listExcel__icon--trash {
+  display: block;
+}
+
+.listExcel__varianti {
+  padding: 4px 6px 6px 35px;
+  font-size: 11px;
+  color: var(--muted);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.listExcel__vHead {
+  display: grid;
+  grid-template-columns: 36px 1fr 52px 48px 40px 36px;
+  gap: 4px 6px;
+  padding: 2px 0 4px;
+  font-weight: 700;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.listExcel__vHeadAction {
+  /* prima colonna: icona Modifica */
+}
+
+.listExcel__vRow {
+  display: grid;
+  grid-template-columns: 36px 1fr 52px 48px 40px 36px;
+  gap: 4px 6px;
+  padding: 2px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  align-items: center;
+}
+
+.listExcel__vRowRemove {
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 11px;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+.listExcel__vRowRemove:hover {
+  color: var(--danger);
+  background: rgba(255, 77, 109, 0.12);
+}
+
+.listExcel__vInput {
+  font: inherit;
+  font-size: 12px;
+  padding: 4px 6px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.2);
+  color: inherit;
+  max-width: 100%;
+}
+
+.listExcel__vInput--num {
+  width: 100%;
+  min-width: 0;
+  font-size: 16px;
+  font-weight: 600;
+  min-height: 34px;
+  padding: 6px 8px;
+  text-align: right;
+}
+
+.listExcel__vRow > .listExcel__vRowActions {
+  justify-self: start;
+}
+
+.listExcel__vRowActions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.listExcel__vRowBtn {
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 11px;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+.listExcel__vRowBtn:hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.listExcel__vRowBtn--save {
+  color: var(--primary);
+}
+
+.listExcel__vRowBtn--save:hover {
+  background: rgba(99, 102, 241, 0.2);
+}
+
+.listExcel__btnRemoveFornitore {
+  flex-shrink: 0;
+  font-size: 11px;
+  padding: 6px 10px;
+  margin-right: 8px;
+}
+
+.listExcel__vRow--empty {
+  grid-column: 1 / -1;
+  color: var(--muted);
+  font-style: italic;
+  border-top: 0;
+}
+
+.listExcel__vRowBtn--first {
+  justify-self: start;
+}
+
+.listExcel__btnIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  min-width: 32px;
+  min-height: 32px;
+  border-radius: 8px;
+}
+
+.listExcel__btnIcon .listExcel__icon {
+  display: block;
+  flex-shrink: 0;
+}
+
+.listExcel__btnIcon.listExcel__vRowBtn .listExcel__icon--pen {
+  color: var(--muted);
+}
+
+.listExcel__btnIcon.listExcel__vRowBtn:hover .listExcel__icon--pen {
+  color: var(--text);
+}
+
+.listExcel__btnIcon.listExcel__vRowRemove .listExcel__icon--trash {
+  color: var(--muted);
+}
+
+.listExcel__btnIcon.listExcel__vRowRemove:hover .listExcel__icon--trash {
+  color: var(--danger);
+}
+
+.listExcel__btnRemoveFornitore.listExcel__btnIcon {
+  padding: 8px;
+  min-width: 36px;
+  min-height: 36px;
+  margin-right: 6px;
+}
+
+@media (max-width: 700px) {
+  .listExcel__thead,
+  .listExcel__tr {
+    grid-template-columns: 32px 70px 1fr 52px 40px 64px;
+  }
+  .listExcel__varianti {
+    padding-left: 8px;
+  }
+  .listExcel__body {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+@media (max-width: 480px) {
+  .listExcel__thead,
+  .listExcel__tr {
+    grid-template-columns: 38px 64px 1fr 48px 36px 58px;
+  }
+}
+
+.groups {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.group {
+  padding: 0;
+  overflow: hidden;
+}
+
+.group__header {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  padding: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.group__header:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.group__title {
+  font-weight: 900;
+}
+
+.group__totals {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--muted);
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.pill {
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+}
+
+.group__body {
+  border-top: 1px solid var(--border);
+  padding: 10px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.article {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.article__main {
+  display: grid;
+  grid-template-columns: 96px 1fr 260px;
+  gap: 12px;
+  padding: 12px;
+}
+
+.thumb {
+  width: 86px;
+  height: 86px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.thumb--empty {
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.article__code {
+  font-weight: 900;
+}
+
+.article__desc {
+  margin-top: 2px;
+  color: var(--text);
+}
+
+.article__meta {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.article__right {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: stretch;
+}
+
+.kpisRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.kpi {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.kpi--compact {
+  padding: 8px 10px;
+}
+
+.kpi--compact .kpi__label {
+  font-size: 11px;
+}
+
+.kpi--compact .kpi__value {
+  font-size: 13px;
+}
+
+.kpi__label {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.kpi__value {
+  font-weight: 900;
+}
+
+.variantsTable {
+  border-top: 1px solid var(--border);
+  padding: 10px 12px 12px;
+}
+
+.variantsTable--compact {
+  padding: 8px 12px 10px;
+}
+
+.variantsTable--compact .variantsTable__head {
+  padding-bottom: 6px;
+}
+
+.variantsTable--compact .variantsTable__row {
+  padding: 6px 0;
+}
+
+.variantsTable__head {
+  display: grid;
+  grid-template-columns: 1fr 1fr 80px 60px;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 12px;
+  padding-bottom: 8px;
+}
+
+.variantsTable__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 80px 60px;
+  gap: 10px;
+  padding: 8px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.variantsTable__row--empty {
+  color: var(--muted);
+  padding: 10px 0 0;
+  border-top: 0;
+}
+
+.table {
+  padding: 0;
+  overflow: hidden;
+}
+
+.table__head {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.2fr;
+  gap: 10px;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.table__row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.2fr;
+  gap: 10px;
+  padding: 10px 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  align-items: center;
+}
+
+.table__row--empty {
+  color: var(--muted);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  border: 1px solid var(--border);
+}
+
+.chip--value {
+  color: #8cf599;
+  border-color: rgba(140, 245, 153, 0.35);
+  background: rgba(16, 112, 43, 0.25);
+}
+
+/* Lista acquisti – non editabile */
+.listaAcquisti {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.listaAcquisti__block {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.listaAcquisti__tableWrap {
+  overflow-x: auto;
+  min-width: 0;
+}
+
+.listaAcquisti__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.listaAcquisti__nome {
+  font-weight: 800;
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.listaAcquisti__totale {
+  font-weight: 700;
+  color: #8cf599;
+  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 10px;
+  background: rgba(16, 112, 43, 0.25);
+  border: 1px solid rgba(140, 245, 153, 0.35);
+}
+
+.listaAcquisti__table {
+  font-size: 13px;
+  min-width: 318px;
+}
+
+.listaAcquisti__thead {
+  display: grid;
+  grid-template-columns: 90px 85px 32px 36px 70px;
+  gap: 0;
+  padding: 10px 14px;
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.12);
+}
+
+.listaAcquisti__thead .listaAcquisti__th {
+  min-width: 0;
+}
+
+.listaAcquisti__th--center {
+  text-align: center;
+}
+
+.listaAcquisti__th--num,
+.listaAcquisti__th--right {
+  text-align: right;
+}
+
+.listaAcquisti__tr {
+  display: grid;
+  grid-template-columns: 90px 85px 32px 36px 70px;
+  gap: 0;
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  align-items: center;
+  font-size: 13px;
+  min-height: 40px;
+}
+
+.listaAcquisti__tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.listaAcquisti__tr:last-child {
+  border-bottom: 0;
+}
+
+.listaAcquisti__td {
+  color: var(--text);
+}
+
+.listaAcquisti__td--center {
+  text-align: center;
+}
+
+.listaAcquisti__th--colore,
+.listaAcquisti__td--colore {
+  min-width: 0;
+  max-width: 85px;
+  padding-right: 3px;
+}
+
+.listaAcquisti__td--colore {
+  white-space: pre-line;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-height: 2.6em;
+  overflow: hidden;
+}
+
+.listaAcquisti__th--taglia,
+.listaAcquisti__td--taglia {
+  margin-right: -2px;
+}
+
+.listaAcquisti__td--num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.listaAcquisti__td--code {
+  font-weight: 400;
+}
+
+.listaAcquisti__td--prezzo {
+  color: #8cf599;
+  font-weight: 600;
+}
+
+.listaAcquisti__td--totale {
+  color: #8cf599;
+  font-weight: 700;
+}
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  z-index: 50;
+}
+
+.modalCard {
+  width: min(720px, 100%);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 14px;
+  background: rgba(15, 26, 45, 0.92);
+  backdrop-filter: blur(10px);
+}
+
+.modalCard--scroll {
+  max-height: calc(100vh - 36px);
+  overflow-y: auto;
+}
+
+.modalList {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 52vh;
+  overflow: auto;
+  padding-right: 4px;
+}
+
+.modalItem {
+  text-align: left;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text);
+  padding: 10px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.modalItem:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.modalEmpty {
+  color: var(--muted);
+  padding: 10px 2px;
+}
+
+.modalConfirm__text {
+  margin: 10px 0 0;
+  color: var(--text);
+}
+
+@media (max-width: 700px) {
+  .variantRow {
+    grid-template-columns: 1fr 1.6fr 7ch 7ch auto;
+  }
+  .variantActions {
+    justify-content: flex-end;
+  }
+  .article__main {
+    grid-template-columns: 96px 1fr;
+  }
+  .article__right {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ========== Smartphone (ottimizzazione touch e leggibilità) ========== */
+@media (max-width: 480px) {
+  .app {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
+  .content {
+    padding: 14px;
+    padding-left: max(14px, env(safe-area-inset-left));
+    padding-right: max(14px, env(safe-area-inset-right));
+    padding-bottom: max(18px, env(safe-area-inset-bottom));
+  }
+
+  .topbar {
+    padding: 12px 14px;
+    padding-left: max(14px, env(safe-area-inset-left));
+    padding-right: max(14px, env(safe-area-inset-right));
+    padding-top: max(12px, env(safe-area-inset-top));
+  }
+
+  .content {
+    padding-left: max(14px, env(safe-area-inset-left));
+    padding-right: max(14px, env(safe-area-inset-right));
+  }
+
+  .page__title {
+    font-size: 18px;
+    margin-bottom: 14px;
+  }
+
+  .page--nuovo-articolo .card {
+    padding: 16px 14px;
+  }
+
+  .nav__link {
+    padding: 12px 14px;
+    border-radius: 10px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  /* Font-size ≥16px sugli input evita lo zoom automatico su iOS */
+  input[type="text"],
+  input[type="number"],
+  input:not([type]) {
+    padding: 12px 14px;
+    border-radius: 11px;
+    font-size: 16px;
+    min-height: 44px;
+    box-sizing: border-box;
+  }
+
+  .btn {
+    padding: 12px 14px;
+    border-radius: 11px;
+    min-height: 44px;
+  }
+
+  .btn--addVariant {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .grid {
+    gap: 10px;
+  }
+
+  .grid--2 {
+    grid-template-columns: 1fr;
+  }
+
+  .page--nuovo-articolo .grid.grid--2 {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .page--nuovo-articolo .grid.grid--2 > .field:not(.field--articolo):not(.field--descrizione):not(.field--composizione):not(.field--prezzo) {
+    grid-column: 1 / -1;
+  }
+
+  .page--nuovo-articolo .field--articolo {
+    grid-column: 1;
+  }
+
+  .page--nuovo-articolo .field--descrizione {
+    grid-column: 2;
+  }
+
+  .page--nuovo-articolo .field--composizione {
+    grid-column: 1;
+  }
+
+  .page--nuovo-articolo .field--prezzo {
+    grid-column: 2;
+  }
+
+  .page--nuovo-articolo input:not(.photoPicker__input) {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .page--nuovo-articolo .field .row.row--nowrap {
+    flex-wrap: wrap;
+  }
+
+  .page--nuovo-articolo .field .row.row--nowrap > input {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+
+  .page--nuovo-articolo .field .row.row--nowrap > .btn {
+    flex: 1 1 100%;
+  }
+
+  .hint {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  }
+
+  .row {
+    gap: 8px;
+  }
+
+  .photoPicker {
+    padding: 12px 10px;
+    border-radius: 12px;
+    min-height: 56px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .variantRow {
+    padding: 12px;
+    border-radius: 12px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto auto;
+  }
+
+  .variantRow__colore {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  .variantRow__taglie {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    min-width: 0;
+  }
+
+  .variantRow__box {
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  .variantRow__quantita {
+    grid-column: 2;
+    grid-row: 3;
+  }
+
+  .variantActions {
+    grid-column: 1 / -1;
+    grid-row: 4;
+  }
+
+  .sizeRow {
+    flex-wrap: wrap;
+  }
+
+  .sizeBtn {
+    padding: 12px 14px;
+    min-width: 52px;
+    min-height: 44px;
+  }
+
+  .row--end {
+    width: 100%;
+  }
+
+  .row--end > .btn {
+    width: 100%;
+  }
+
+  .page--nuovo-articolo .row.row--between {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .page--nuovo-articolo .row.row--between .btn--addVariant {
+    width: 100%;
+  }
+
+  /* Lista articoli (mobile): touch target ≥44px */
+  .listExcel__header {
+    padding: 12px 14px;
+    font-size: 14px;
+    min-height: 44px;
+    box-sizing: border-box;
+  }
+
+  .listExcel__totals {
+    font-size: 12px;
+  }
+
+  .listExcel__btnRemoveFornitore {
+    padding: 12px 14px;
+    min-height: 44px;
+  }
+
+  .listExcel__th,
+  .listExcel__td {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .listExcel__td--img .listExcel__thumb {
+    width: 30px;
+    height: 30px;
+  }
+
+  .listExcel__btnModificaArticolo {
+    width: 32px;
+    height: 34px;
+    min-height: 34px;
+    padding: 4px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .listExcel__btnEliminaArticolo {
+    min-height: 44px;
+    padding: 8px 10px;
+  }
+
+  .listExcel__vRowBtn,
+  .listExcel__vRowRemove {
+    padding: 10px 12px;
+    min-height: 44px;
+  }
+
+  .listExcel__vRowActions {
+    gap: 10px;
+  }
+
+  .listExcel__vInput {
+    font-size: 16px;
+    min-height: 44px;
+    padding: 10px 12px;
+  }
+
+  .listExcel__body {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .variantRow__colore input,
+  .variantRow__box input,
+  .variantRow__quantita input {
+    min-height: 44px;
+    font-size: 16px;
+    padding: 12px 14px;
+  }
+
+  /* Lista acquisti: celle più alte su mobile */
+  .listaAcquisti__header {
+    padding: 12px 14px;
+    min-height: 44px;
+  }
+
+  .listaAcquisti__td,
+  .listaAcquisti__th {
+    padding: 10px 8px;
+  }
+}
+
