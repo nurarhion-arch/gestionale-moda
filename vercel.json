@@ -1,0 +1,8 @@
+{
+  "installCommand": "cd client && npm install && chmod +x node_modules/.bin/* 2>/dev/null || true",
+  "buildCommand": "cd client && npx vite build",
+  "outputDirectory": "client/dist",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
