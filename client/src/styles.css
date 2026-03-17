@@ -8,6 +8,15 @@
   --primary: #7c5cff;
   --danger: #ff4d6d;
   --success: #2bd576;
+
+  /* Lista acquisti: larghezze colonne (desktop) */
+  --la-w-foto: 38px;
+  --la-w-articolo: 90px;
+  --la-w-colore: 85px;
+  --la-w-taglia: 32px;
+  --la-w-quantita: 36px;
+  --la-w-prezzo: 70px;
+  --la-w-totale: 70px;
 }
 
 html[data-theme="light"] {
@@ -1027,6 +1036,17 @@ input:focus {
 }
 
 @media (max-width: 480px) {
+  :root {
+    /* Lista acquisti: più compatto a 360px */
+    --la-w-foto: 32px;
+    --la-w-articolo: 78px;
+    --la-w-colore: 72px;
+    --la-w-taglia: 30px;
+    --la-w-quantita: 34px;
+    --la-w-prezzo: 60px;
+    --la-w-totale: 60px;
+  }
+
   .listExcel__thead,
   .listExcel__tr {
     grid-template-columns: 38px 64px 1fr 48px 36px 58px;
@@ -1808,15 +1828,18 @@ html[data-theme="light"] .alert--success {
     padding: 12px 14px;
   }
 
-  /* Lista acquisti: celle più alte su mobile */
+  /* Lista acquisti: più compatto su mobile */
   .listaAcquisti__header {
-    padding: 12px 14px;
-    min-height: 44px;
+    padding: 8px 10px;
+    min-height: 0;
   }
 
-  .listaAcquisti__td,
-  .listaAcquisti__th {
-    padding: 10px 8px;
+  .listaAcquisti__thead {
+    padding: 6px 10px;
+  }
+
+  .listaAcquisti__tr {
+    padding: 4px 10px;
   }
 }
 

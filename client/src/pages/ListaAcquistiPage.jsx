@@ -76,13 +76,13 @@ export default function ListaAcquistiPage() {
 
   const colonne = useMemo(
     () => [
-      { key: "foto", label: "Foto", width: "38px" },
-      { key: "articolo", label: "Articolo", width: "90px" },
-      { key: "colore", label: "Colore", width: "85px" },
-      { key: "taglia", label: "Taglia", width: "32px" },
-      { key: "quantita", label: "Q.tà", width: "36px" },
-      { key: "prezzo", label: "Prezzo", width: "70px" },
-      { key: "totale", label: "Totale", width: "70px" }
+      { key: "foto", label: "Foto", width: "var(--la-w-foto)" },
+      { key: "articolo", label: "Articolo", width: "var(--la-w-articolo)" },
+      { key: "colore", label: "Colore", width: "var(--la-w-colore)" },
+      { key: "taglia", label: "Taglia", width: "var(--la-w-taglia)" },
+      { key: "quantita", label: "Q.tà", width: "var(--la-w-quantita)" },
+      { key: "prezzo", label: "Prezzo", width: "var(--la-w-prezzo)" },
+      { key: "totale", label: "Totale", width: "var(--la-w-totale)" }
     ],
     []
   );
