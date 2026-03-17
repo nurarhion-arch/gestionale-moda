@@ -85,8 +85,8 @@ export default function NuovoArticoloPage() {
 
   function updateField(name, value) {
     setForm((f) => ({ ...f, [name]: value }));
-    if (name === "fornitore") api.setPreferenza("sticky_fornitore", value).catch(() => {});
-    if (name === "cliente") api.setPreferenza("sticky_cliente", value).catch(() => {});
+    if (name === "fornitore") api.setPreferenza("sticky_fornitore", value);
+    if (name === "cliente") api.setPreferenza("sticky_cliente", value);
   }
 
   function updateVariante(idx, patch) {
@@ -218,11 +218,7 @@ export default function NuovoArticoloPage() {
         }))
       };
       const resp = await api.creaArticolo(payload);
-      if (resp?.queued) {
-        setEsito("Dati salvati in locale. Saranno inviati a Supabase quando sei online.");
-      } else {
-        setEsito(`Articolo inserito (ID: ${resp.articolo_id}).`);
-      }
+      setEsito(`Articolo inserito (ID: ${resp.articolo_id}).`);
       setForm((prev) => ({
         codice_articolo: "",
         descrizione: "",
@@ -347,7 +343,7 @@ export default function NuovoArticoloPage() {
 
           {/* 5. Descrizione */}
           <label className="field field--descrizione">
-            <div className="field__label">Prodotto</div>
+            <div className="field__label">Descrizione</div>
             <input
               value={form.descrizione}
               onChange={(e) => updateField("descrizione", e.target.value)}

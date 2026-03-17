@@ -282,7 +282,7 @@ export default function ArticoliPerFornitorePage() {
                     <div className="listExcel__thead">
                       <div className="listExcel__th listExcel__th--img" />
                       <div className="listExcel__th">Articolo</div>
-                      <div className="listExcel__th">Prodotto</div>
+                      <div className="listExcel__th">Descrizione</div>
                       <div className="listExcel__th listExcel__th--num">Prezzo</div>
                       <div className="listExcel__th listExcel__th--num">Q.tà</div>
                       <div className="listExcel__th listExcel__th--num">Valore</div>
@@ -482,7 +482,7 @@ export default function ArticoliPerFornitorePage() {
                 />
               </label>
               <label className="field">
-                <div className="field__label">Prodotto</div>
+                <div className="field__label">Descrizione</div>
                 <input
                   value={editingArticolo.descrizione}
                   onChange={(e) => setEditingArticolo((x) => ({ ...x, descrizione: e.target.value }))}

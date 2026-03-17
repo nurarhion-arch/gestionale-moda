@@ -1,14 +1,4 @@
 import { supabase } from "./supabase.js";
-import {
-  loadArticoliGruppi,
-  loadListaAcquistiGruppi,
-  outboxAdd,
-  outboxListPending,
-  outboxMarkDone,
-  outboxMarkFailed,
-  saveArticoliGruppi,
-  saveListaAcquistiGruppi
-} from "./dbDexie.js";
 
 // Mappa campi Supabase ↔ app (articoli: art ↔ codice_articolo, foto_url ↔ foto_data_url; varianti: ref_articolo ↔ articolo_id)
 function toAppArticolo(row) {
@@ -71,23 +61,6 @@ function handleError(err) {
 }
 
 export const api = {
-  async syncOutbox() {
-    const pending = await outboxListPending(50);
-    for (const item of pending) {
-      try {
-        if (item.type === "creaArticolo") {
-          await api._creaArticoloOnline(item.payload);
-          await outboxMarkDone(item.id);
-        } else {
-          await outboxMarkFailed(item.id, "Tipo non supportato");
-        }
-      } catch (e) {
-        await outboxMarkFailed(item.id, e?.message || String(e));
-      }
-    }
-    return { ok: true };
-  },
-
   health: async () => {
     const { error } = await supabase.from("articoli").select("id").limit(1);
     if (error) throw new Error(error.message);
@@ -95,51 +68,45 @@ export const api = {
   },
 
   async articoliRaggruppati() {
-    try {
-      const { data: articoliRows, error: e1 } = await supabase
-        .from("articoli")
-        .select("id, art, descrizione, composizione, prezzo, foto_url, fornitore, cliente, created_at")
-        .order("fornitore")
-        .order("art");
-      if (e1) handleError(e1);
+    const { data: articoliRows, error: e1 } = await supabase
+      .from("articoli")
+      .select("id, art, descrizione, composizione, prezzo, foto_url, fornitore, cliente, created_at")
+      .order("fornitore")
+      .order("art");
+    if (e1) handleError(e1);
 
-      const { data: variantiRows, error: e2 } = await supabase.from("varianti").select("ref_articolo, quantita");
-      if (e2) handleError(e2);
+    const { data: variantiRows, error: e2 } = await supabase
+      .from("varianti")
+      .select("ref_articolo, quantita");
+    if (e2) handleError(e2);
 
-      const sumByArticolo = new Map();
-      for (const v of variantiRows || []) {
-        const prev = sumByArticolo.get(v.ref_articolo) ?? 0;
-        sumByArticolo.set(v.ref_articolo, prev + (Number(v.quantita) || 0));
-      }
-
-      const articoli = (articoliRows || []).map((r) => ({
-        ...toAppArticolo(r),
-        quantita_totale: sumByArticolo.get(r.id) ?? 0
-      }));
-
-      const gruppi = [];
-      const byFornitore = new Map();
-      for (const a of articoli) {
-        const key = a.fornitore;
-        if (!byFornitore.has(key)) {
-          const g = { fornitore: key, articoli: [], totali: { articoli: 0, quantita: 0, valore: 0 } };
-          byFornitore.set(key, g);
-          gruppi.push(g);
-        }
-        const g = byFornitore.get(key);
-        g.articoli.push(a);
-        g.totali.articoli += 1;
-        g.totali.quantita += a.quantita_totale;
-        g.totali.valore += Number(a.prezzo) * a.quantita_totale;
-      }
-
-      await saveArticoliGruppi(gruppi);
-      return { gruppi };
-    } catch (e) {
-      const gruppi = await loadArticoliGruppi();
-      if (gruppi.length) return { gruppi };
-      throw e;
+    const sumByArticolo = new Map();
+    for (const v of variantiRows || []) {
+      const prev = sumByArticolo.get(v.ref_articolo) ?? 0;
+      sumByArticolo.set(v.ref_articolo, prev + (Number(v.quantita) || 0));
     }
+
+    const articoli = (articoliRows || []).map((r) => ({
+      ...toAppArticolo(r),
+      quantita_totale: sumByArticolo.get(r.id) ?? 0
+    }));
+
+    const gruppi = [];
+    const byFornitore = new Map();
+    for (const a of articoli) {
+      const key = a.fornitore;
+      if (!byFornitore.has(key)) {
+        const g = { fornitore: key, articoli: [], totali: { articoli: 0, quantita: 0, valore: 0 } };
+        byFornitore.set(key, g);
+        gruppi.push(g);
+      }
+      const g = byFornitore.get(key);
+      g.articoli.push(a);
+      g.totali.articoli += 1;
+      g.totali.quantita += a.quantita_totale;
+      g.totali.valore += Number(a.prezzo) * a.quantita_totale;
+    }
+    return { gruppi };
   },
 
   async variantiArticolo(articoloId) {
@@ -183,70 +150,44 @@ export const api = {
   },
 
   async listaAcquisti() {
-    try {
-      const { data: articoliRows, error: e1 } = await supabase
-        .from("articoli")
-        .select("id, fornitore, art, prezzo")
-        .order("fornitore")
-        .order("art");
-      if (e1) handleError(e1);
-      const artById = new Map((articoliRows || []).map((a) => [a.id, { ...a, codice_articolo: a.art }]));
+    const { data: articoliRows, error: e1 } = await supabase
+      .from("articoli")
+      .select("id, fornitore, art, prezzo")
+      .order("fornitore")
+      .order("art");
+    if (e1) handleError(e1);
+    const artById = new Map((articoliRows || []).map((a) => [a.id, { ...a, codice_articolo: a.art }]));
 
-      const { data: variantiRows, error: e2 } = await supabase
-        .from("varianti")
-        .select("ref_articolo, colore, taglia, quantita")
-        .order("colore")
-        .order("taglia");
-      if (e2) handleError(e2);
+    const { data: variantiRows, error: e2 } = await supabase
+      .from("varianti")
+      .select("ref_articolo, colore, taglia, quantita")
+      .order("colore")
+      .order("taglia");
+    if (e2) handleError(e2);
 
-      const gruppi = new Map();
-      for (const v of variantiRows || []) {
-        const a = artById.get(v.ref_articolo);
-        if (!a) continue;
-        if (!gruppi.has(a.fornitore)) {
-          gruppi.set(a.fornitore, { fornitore: a.fornitore, totale: 0, righe: [] });
-        }
-        const g = gruppi.get(a.fornitore);
-        const prezzo = Number(a.prezzo) || 0;
-        const qty = Number(v.quantita) || 0;
-        g.totale += prezzo * qty;
-        g.righe.push({
-          codice_articolo: a.codice_articolo ?? "",
-          colore: v.colore ?? "",
-          taglia: v.taglia ?? "",
-          quantita: qty,
-          prezzo
-        });
+    const gruppi = new Map();
+    for (const v of variantiRows || []) {
+      const a = artById.get(v.ref_articolo);
+      if (!a) continue;
+      if (!gruppi.has(a.fornitore)) {
+        gruppi.set(a.fornitore, { fornitore: a.fornitore, totale: 0, righe: [] });
       }
-
-      const arr = Array.from(gruppi.values());
-      await saveListaAcquistiGruppi(arr);
-      return { gruppi: arr };
-    } catch (e) {
-      const gruppi = await loadListaAcquistiGruppi();
-      if (gruppi.length) return { gruppi };
-      throw e;
+      const g = gruppi.get(a.fornitore);
+      const prezzo = Number(a.prezzo) || 0;
+      const qty = Number(v.quantita) || 0;
+      g.totale += prezzo * qty;
+      g.righe.push({
+        codice_articolo: a.codice_articolo ?? "",
+        colore: v.colore ?? "",
+        taglia: v.taglia ?? "",
+        quantita: qty,
+        prezzo
+      });
     }
+    return { gruppi: Array.from(gruppi.values()) };
   },
 
   async creaArticolo(payload) {
-    if (typeof navigator !== "undefined" && !navigator.onLine) {
-      await outboxAdd({ type: "creaArticolo", payload });
-      return { ok: true, queued: true };
-    }
-    try {
-      return await api._creaArticoloOnline(payload);
-    } catch (e) {
-      const msg = String(e?.message || e);
-      if (/network|failed to fetch|fetch/i.test(msg)) {
-        await outboxAdd({ type: "creaArticolo", payload });
-        return { ok: true, queued: true };
-      }
-      throw e;
-    }
-  },
-
-  async _creaArticoloOnline(payload) {
     const artRow = toSupabaseArticolo(payload);
     const { data: inserted, error: eArt } = await supabase.from("articoli").insert(artRow).select("id").single();
     if (eArt) {
