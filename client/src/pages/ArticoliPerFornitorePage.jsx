@@ -22,24 +22,6 @@ export default function ArticoliPerFornitorePage() {
   const [confirmDeleteVariante, setConfirmDeleteVariante] = useState(null);
   const [editingVariante, setEditingVariante] = useState(null);
   const [editingArticolo, setEditingArticolo] = useState(null);
-  const [showColonne, setShowColonne] = useState(false);
-  const [colonneVisibili, setColonneVisibili] = useState(() => {
-    try {
-      const raw = localStorage.getItem("articoli_colonneVisibili_v1");
-      const parsed = raw ? JSON.parse(raw) : null;
-      if (Array.isArray(parsed) && parsed.length) return parsed;
-    } catch (e) {}
-    return ["foto", "articolo", "prodotto", "prezzo", "quantita", "valore"];
-  });
-
-  useEffect(() => {
-    const id = setTimeout(() => {
-      try {
-        localStorage.setItem("articoli_colonneVisibili_v1", JSON.stringify(colonneVisibili));
-      } catch (e) {}
-    }, 200);
-    return () => clearTimeout(id);
-  }, [colonneVisibili]);
 
   async function load() {
     setLoading(true);
@@ -69,29 +51,6 @@ export default function ArticoliPerFornitorePage() {
     }
     return { articoli, quantita, valore };
   }, [gruppi]);
-
-  const colonne = useMemo(
-    () => [
-      { key: "foto", label: "Foto", width: "35px" },
-      { key: "articolo", label: "Articolo", width: "74px" },
-      { key: "prodotto", label: "Prodotto", width: "1fr" },
-      { key: "prezzo", label: "Prezzo", width: "58px" },
-      { key: "quantita", label: "Q.tà", width: "44px" },
-      { key: "valore", label: "Valore", width: "72px" }
-    ],
-    []
-  );
-
-  const isVisible = (key) => colonneVisibili.includes(key);
-  const gridTemplateColumns = useMemo(
-    () => colonne.filter((c) => isVisible(c.key)).map((c) => c.width).join(" "),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [colonneVisibili]
-  );
-
-  function toggleColonna(key) {
-    setColonneVisibili((prev) => (prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]));
-  }
 
   async function toggleFornitore(fornitore) {
     setOpen((s) => {
@@ -267,9 +226,6 @@ export default function ArticoliPerFornitorePage() {
           </div>
         </div>
         <div className="row">
-          <button className="btn btn--ghost" type="button" onClick={() => setShowColonne(true)}>
-            Colonne
-          </button>
           <button className="btn btn--ghost" onClick={load} disabled={loading}>
             Aggiorna
           </button>
@@ -323,13 +279,13 @@ export default function ArticoliPerFornitorePage() {
               {isOpen ? (
                 <div className="listExcel__body">
                   <div className="listExcel__table">
-                    <div className="listExcel__thead" style={{ gridTemplateColumns }}>
-                      {isVisible("foto") ? <div className="listExcel__th listExcel__th--img" /> : null}
-                      {isVisible("articolo") ? <div className="listExcel__th">Articolo</div> : null}
-                      {isVisible("prodotto") ? <div className="listExcel__th">Prodotto</div> : null}
-                      {isVisible("prezzo") ? <div className="listExcel__th listExcel__th--num">Prezzo</div> : null}
-                      {isVisible("quantita") ? <div className="listExcel__th listExcel__th--num">Q.tà</div> : null}
-                      {isVisible("valore") ? <div className="listExcel__th listExcel__th--num">Valore</div> : null}
+                    <div className="listExcel__thead">
+                      <div className="listExcel__th listExcel__th--img" />
+                      <div className="listExcel__th">Articolo</div>
+                      <div className="listExcel__th">Prodotto</div>
+                      <div className="listExcel__th listExcel__th--num">Prezzo</div>
+                      <div className="listExcel__th listExcel__th--num">Q.tà</div>
+                      <div className="listExcel__th listExcel__th--num">Valore</div>
                     </div>
                     {g.articoli.map((a) => {
                       const varianti = variantiCache.get(a.id) || null;
@@ -337,54 +293,49 @@ export default function ArticoliPerFornitorePage() {
                       const valore = onlyNumber(a.prezzo) * onlyNumber(a.quantita_totale);
                       return (
                         <React.Fragment key={a.id}>
-                          <div className="listExcel__tr" style={{ gridTemplateColumns }}>
-                            {isVisible("foto") ? (
-                              <div className="listExcel__td listExcel__td--img">
-                                <div className="listExcel__imgBlock">
-                                  {a.foto_data_url ? (
-                                    <img className="listExcel__thumb" src={a.foto_data_url} alt="" />
-                                  ) : (
-                                    <span className="listExcel__noimg">—</span>
-                                  )}
-                                  <button
-                                    type="button"
-                                    className="listExcel__btnModificaArticolo"
-                                    title="Modifica articolo"
-                                    aria-label="Modifica articolo"
-                                    onClick={() => startEditArticolo(a)}
-                                  >
-                                    <svg className="listExcel__icon listExcel__icon--pen" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                                      <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
-                                      <path d="M18.5 2.5a2.12 2.12 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
-                                    </svg>
-                                  </button>
-                                </div>
-                              </div>
-                            ) : null}
-
-                            {isVisible("articolo") ? <div className="listExcel__td listExcel__td--code">{a.codice_articolo}</div> : null}
-                            {isVisible("prodotto") ? <div className="listExcel__td listExcel__td--desc">{a.descrizione || "—"}</div> : null}
-                            {isVisible("prezzo") ? <div className="listExcel__td listExcel__td--num">{euro(a.prezzo)}</div> : null}
-                            {isVisible("quantita") ? <div className="listExcel__td listExcel__td--num">{a.quantita_totale}</div> : null}
-                            {isVisible("valore") ? (
-                              <div className="listExcel__td listExcel__td--num listExcel__td--value listExcel__td--valueWithDelete">
-                                <span className="listExcel__valueText">{euro(valore)}</span>
+                          <div className="listExcel__tr">
+                            <div className="listExcel__td listExcel__td--img">
+                              <div className="listExcel__imgBlock">
+                                {a.foto_data_url ? (
+                                  <img className="listExcel__thumb" src={a.foto_data_url} alt="" />
+                                ) : (
+                                  <span className="listExcel__noimg">—</span>
+                                )}
                                 <button
                                   type="button"
-                                  className="listExcel__btnEliminaArticolo"
-                                  title="Elimina articolo"
-                                  aria-label="Elimina articolo"
-                                  onClick={() => setConfirmDeleteArticolo({ id: a.id, codice_articolo: a.codice_articolo })}
+                                  className="listExcel__btnModificaArticolo"
+                                  title="Modifica articolo"
+                                  aria-label="Modifica articolo"
+                                  onClick={() => startEditArticolo(a)}
                                 >
-                                  <svg className="listExcel__icon listExcel__icon--trash" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                                    <polyline points="3 6 5 6 21 6" />
-                                    <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" />
-                                    <line x1="10" y1="11" x2="10" y2="17" />
-                                    <line x1="14" y1="11" x2="14" y2="17" />
+                                  <svg className="listExcel__icon listExcel__icon--pen" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                                    <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
+                                    <path d="M18.5 2.5a2.12 2.12 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
                                   </svg>
                                 </button>
                               </div>
-                            ) : null}
+                            </div>
+                            <div className="listExcel__td listExcel__td--code">{a.codice_articolo}</div>
+                            <div className="listExcel__td listExcel__td--desc">{a.descrizione || "—"}</div>
+                            <div className="listExcel__td listExcel__td--num">{euro(a.prezzo)}</div>
+                            <div className="listExcel__td listExcel__td--num">{a.quantita_totale}</div>
+                            <div className="listExcel__td listExcel__td--num listExcel__td--value listExcel__td--valueWithDelete">
+                              <span className="listExcel__valueText">{euro(valore)}</span>
+                              <button
+                                type="button"
+                                className="listExcel__btnEliminaArticolo"
+                                title="Elimina articolo"
+                                aria-label="Elimina articolo"
+                                onClick={() => setConfirmDeleteArticolo({ id: a.id, codice_articolo: a.codice_articolo })}
+                              >
+                                <svg className="listExcel__icon listExcel__icon--trash" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                                  <polyline points="3 6 5 6 21 6" />
+                                  <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" />
+                                  <line x1="10" y1="11" x2="10" y2="17" />
+                                  <line x1="14" y1="11" x2="14" y2="17" />
+                                </svg>
+                              </button>
+                            </div>
                           </div>
                           <div className="listExcel__varianti">
                             <div className="listExcel__vHead">
@@ -439,27 +390,6 @@ export default function ArticoliPerFornitorePage() {
           );
         })}
       </div>
-
-      {showColonne ? (
-        <div className="modalOverlay" role="dialog" aria-modal="true" onClick={(e) => e.target === e.currentTarget && setShowColonne(false)}>
-          <div className="modalCard" onClick={(e) => e.stopPropagation()}>
-            <div className="sectionTitle">Colonne visibili</div>
-            <div className="modalList" style={{ maxHeight: "unset" }}>
-              {colonne.map((c) => (
-                <label key={c.key} className="modalItem" style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                  <input type="checkbox" checked={isVisible(c.key)} onChange={() => toggleColonna(c.key)} />
-                  <span>{c.label}</span>
-                </label>
-              ))}
-            </div>
-            <div className="row row--end" style={{ gap: "10px", marginTop: "14px" }}>
-              <button type="button" className="btn btn--ghost" onClick={() => setShowColonne(false)}>
-                Chiudi
-              </button>
-            </div>
-          </div>
-        </div>
-      ) : null}
 
       {confirmDeleteFornitore !== null ? (
         <div

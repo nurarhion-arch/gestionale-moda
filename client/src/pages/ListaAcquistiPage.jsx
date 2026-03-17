@@ -45,7 +45,7 @@ export default function ListaAcquistiPage() {
       const parsed = raw ? JSON.parse(raw) : null;
       if (Array.isArray(parsed) && parsed.length) return parsed;
     } catch (e) {}
-    return ["articolo", "colore", "taglia", "quantita", "prezzo", "totale"];
+    return ["articolo", "colore", "taglia", "quantita", "totale"];
   });
 
   useEffect(() => {
@@ -76,23 +76,16 @@ export default function ListaAcquistiPage() {
 
   const colonne = useMemo(
     () => [
-      { key: "articolo", label: "Articolo", width: "90px" },
-      { key: "colore", label: "Colore", width: "85px" },
-      { key: "taglia", label: "Taglia", width: "32px" },
-      { key: "quantita", label: "Q.tà", width: "36px" },
-      { key: "prezzo", label: "Prezzo", width: "70px" },
-      { key: "totale", label: "Totale", width: "70px" }
+      { key: "articolo", label: "Articolo" },
+      { key: "colore", label: "Colore" },
+      { key: "taglia", label: "Taglia" },
+      { key: "quantita", label: "Q.tà" },
+      { key: "totale", label: "Totale" }
     ],
     []
   );
 
   const isVisible = (key) => colonneVisibili.includes(key);
-
-  const gridTemplateColumns = useMemo(
-    () => colonne.filter((c) => isVisible(c.key)).map((c) => c.width).join(" "),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [colonneVisibili]
-  );
 
   function toggleColonna(key) {
     setColonneVisibili((prev) => (prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]));
@@ -131,12 +124,11 @@ export default function ListaAcquistiPage() {
               </div>
               <div className="listaAcquisti__tableWrap">
                 <div className="listaAcquisti__table">
-                <div className="listaAcquisti__thead" style={{ gridTemplateColumns }}>
+                <div className="listaAcquisti__thead">
                   {isVisible("articolo") ? <div className="listaAcquisti__th">Articolo</div> : null}
                   {isVisible("colore") ? <div className="listaAcquisti__th listaAcquisti__th--colore">Colore</div> : null}
                   {isVisible("taglia") ? <div className="listaAcquisti__th listaAcquisti__th--center listaAcquisti__th--taglia">Taglia</div> : null}
                   {isVisible("quantita") ? <div className="listaAcquisti__th listaAcquisti__th--num">Q.tà</div> : null}
-                  {isVisible("prezzo") ? <div className="listaAcquisti__th listaAcquisti__th--num">Prezzo</div> : null}
                   {isVisible("totale") ? <div className="listaAcquisti__th listaAcquisti__th--num">Totale</div> : null}
                 </div>
                 {sortRighe(g.righe).map((r, idx) => {
@@ -144,14 +136,13 @@ export default function ListaAcquistiPage() {
                   const prezzo = Number(r.prezzo) || 0;
                   const totaleRiga = prezzo * qty;
                   return (
-                    <div key={`${r.codice_articolo}-${r.colore}-${r.taglia}-${idx}`} className="listaAcquisti__tr" style={{ gridTemplateColumns }}>
+                    <div key={`${r.codice_articolo}-${r.colore}-${r.taglia}-${idx}`} className="listaAcquisti__tr">
                       {isVisible("articolo") ? <div className="listaAcquisti__td listaAcquisti__td--code">{r.codice_articolo || "—"}</div> : null}
                       {isVisible("colore") ? <div className="listaAcquisti__td listaAcquisti__td--colore">{coloreSuDueRighe(r.colore)}</div> : null}
                       {isVisible("taglia") ? (
                         <div className="listaAcquisti__td listaAcquisti__td--center listaAcquisti__td--taglia">{capitalize(r.taglia) || "—"}</div>
                       ) : null}
                       {isVisible("quantita") ? <div className="listaAcquisti__td listaAcquisti__td--num">{qty}</div> : null}
-                      {isVisible("prezzo") ? <div className="listaAcquisti__td listaAcquisti__td--num listaAcquisti__td--prezzo">{euro(prezzo)}</div> : null}
                       {isVisible("totale") ? <div className="listaAcquisti__td listaAcquisti__td--num listaAcquisti__td--totale">{euro(totaleRiga)}</div> : null}
                     </div>
                   );
