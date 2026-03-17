@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { api } from "../lib/api";
 
 function euro(n) {
@@ -32,10 +32,30 @@ function sortRighe(righe) {
   });
 }
 
+const STORAGE_KEY_COLONNE = "listaAcquisti_colonneVisibili_v1";
+
 export default function ListaAcquistiPage() {
   const [loading, setLoading] = useState(true);
   const [errore, setErrore] = useState(null);
   const [gruppi, setGruppi] = useState([]);
+  const [showColonne, setShowColonne] = useState(false);
+  const [colonneVisibili, setColonneVisibili] = useState(() => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY_COLONNE);
+      const parsed = raw ? JSON.parse(raw) : null;
+      if (Array.isArray(parsed) && parsed.length) return parsed;
+    } catch (e) {}
+    return ["articolo", "colore", "taglia", "quantita", "totale"];
+  });
+
+  useEffect(() => {
+    const id = setTimeout(() => {
+      try {
+        localStorage.setItem(STORAGE_KEY_COLONNE, JSON.stringify(colonneVisibili));
+      } catch (e) {}
+    }, 200);
+    return () => clearTimeout(id);
+  }, [colonneVisibili]);
 
   async function load() {
     setLoading(true);
@@ -54,6 +74,23 @@ export default function ListaAcquistiPage() {
     load();
   }, []);
 
+  const colonne = useMemo(
+    () => [
+      { key: "articolo", label: "Articolo" },
+      { key: "colore", label: "Colore" },
+      { key: "taglia", label: "Taglia" },
+      { key: "quantita", label: "Q.tà" },
+      { key: "totale", label: "Totale" }
+    ],
+    []
+  );
+
+  const isVisible = (key) => colonneVisibili.includes(key);
+
+  function toggleColonna(key) {
+    setColonneVisibili((prev) => (prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]));
+  }
+
   return (
     <div className="page">
       <div className="row row--between">
@@ -61,9 +98,14 @@ export default function ListaAcquistiPage() {
           <div className="page__title">Lista acquisti</div>
           <div className="hint">Elenco non modificabile: per fornitore, colore, taglia, quantità e prezzo.</div>
         </div>
-        <button className="btn btn--ghost" onClick={load} disabled={loading}>
-          Aggiorna
-        </button>
+        <div className="row">
+          <button className="btn btn--ghost" type="button" onClick={() => setShowColonne(true)}>
+            Colonne
+          </button>
+          <button className="btn btn--ghost" onClick={load} disabled={loading}>
+            Aggiorna
+          </button>
+        </div>
       </div>
 
       {errore ? <div className="alert alert--error">{errore}</div> : null}
@@ -83,11 +125,11 @@ export default function ListaAcquistiPage() {
               <div className="listaAcquisti__tableWrap">
                 <div className="listaAcquisti__table">
                 <div className="listaAcquisti__thead">
-                  <div className="listaAcquisti__th">Articolo</div>
-                  <div className="listaAcquisti__th listaAcquisti__th--colore">Colore</div>
-                  <div className="listaAcquisti__th listaAcquisti__th--center listaAcquisti__th--taglia">Taglia</div>
-                  <div className="listaAcquisti__th listaAcquisti__th--num">Q.tà</div>
-                  <div className="listaAcquisti__th listaAcquisti__th--num">Totale</div>
+                  {isVisible("articolo") ? <div className="listaAcquisti__th">Articolo</div> : null}
+                  {isVisible("colore") ? <div className="listaAcquisti__th listaAcquisti__th--colore">Colore</div> : null}
+                  {isVisible("taglia") ? <div className="listaAcquisti__th listaAcquisti__th--center listaAcquisti__th--taglia">Taglia</div> : null}
+                  {isVisible("quantita") ? <div className="listaAcquisti__th listaAcquisti__th--num">Q.tà</div> : null}
+                  {isVisible("totale") ? <div className="listaAcquisti__th listaAcquisti__th--num">Totale</div> : null}
                 </div>
                 {sortRighe(g.righe).map((r, idx) => {
                   const qty = Number(r.quantita) >= 0 ? Number(r.quantita) : 0;
@@ -95,11 +137,13 @@ export default function ListaAcquistiPage() {
                   const totaleRiga = prezzo * qty;
                   return (
                     <div key={`${r.codice_articolo}-${r.colore}-${r.taglia}-${idx}`} className="listaAcquisti__tr">
-                      <div className="listaAcquisti__td listaAcquisti__td--code">{r.codice_articolo || "—"}</div>
-                      <div className="listaAcquisti__td listaAcquisti__td--colore">{coloreSuDueRighe(r.colore)}</div>
-                      <div className="listaAcquisti__td listaAcquisti__td--center listaAcquisti__td--taglia">{capitalize(r.taglia) || "—"}</div>
-                      <div className="listaAcquisti__td listaAcquisti__td--num">{qty}</div>
-                      <div className="listaAcquisti__td listaAcquisti__td--num listaAcquisti__td--totale">{euro(totaleRiga)}</div>
+                      {isVisible("articolo") ? <div className="listaAcquisti__td listaAcquisti__td--code">{r.codice_articolo || "—"}</div> : null}
+                      {isVisible("colore") ? <div className="listaAcquisti__td listaAcquisti__td--colore">{coloreSuDueRighe(r.colore)}</div> : null}
+                      {isVisible("taglia") ? (
+                        <div className="listaAcquisti__td listaAcquisti__td--center listaAcquisti__td--taglia">{capitalize(r.taglia) || "—"}</div>
+                      ) : null}
+                      {isVisible("quantita") ? <div className="listaAcquisti__td listaAcquisti__td--num">{qty}</div> : null}
+                      {isVisible("totale") ? <div className="listaAcquisti__td listaAcquisti__td--num listaAcquisti__td--totale">{euro(totaleRiga)}</div> : null}
                     </div>
                   );
                 })}
@@ -109,6 +153,27 @@ export default function ListaAcquistiPage() {
           ))}
         </div>
       )}
+
+      {showColonne ? (
+        <div className="modalOverlay" role="dialog" aria-modal="true" onClick={(e) => e.target === e.currentTarget && setShowColonne(false)}>
+          <div className="modalCard" onClick={(e) => e.stopPropagation()}>
+            <div className="sectionTitle">Colonne visibili</div>
+            <div className="modalList" style={{ maxHeight: "unset" }}>
+              {colonne.map((c) => (
+                <label key={c.key} className="modalItem" style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                  <input type="checkbox" checked={isVisible(c.key)} onChange={() => toggleColonna(c.key)} />
+                  <span>{c.label}</span>
+                </label>
+              ))}
+            </div>
+            <div className="row row--end" style={{ gap: "10px", marginTop: "14px" }}>
+              <button type="button" className="btn btn--ghost" onClick={() => setShowColonne(false)}>
+                Chiudi
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
