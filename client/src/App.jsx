@@ -1,15 +1,58 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { NavLink, Route, Routes } from "react-router-dom";
 import NuovoArticoloPage from "./pages/NuovoArticoloPage.jsx";
 import ArticoliPerFornitorePage from "./pages/ArticoliPerFornitorePage.jsx";
 import ListaAcquistiPage from "./pages/ListaAcquistiPage.jsx";
+import { api } from "./lib/api.js";
 
 export default function App() {
+  const [theme, setTheme] = useState(() => localStorage.getItem("theme") || "dark");
+  const [isOnline, setIsOnline] = useState(() => (typeof navigator !== "undefined" ? navigator.onLine : true));
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  useEffect(() => {
+    function handleOnline() {
+      setIsOnline(true);
+      api.syncOutbox?.().catch(() => {});
+    }
+    function handleOffline() {
+      setIsOnline(false);
+    }
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
+    return () => {
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isOnline) api.syncOutbox?.().catch(() => {});
+  }, [isOnline]);
+
+  const statusLabel = useMemo(() => (isOnline ? "Online" : "Offline"), [isOnline]);
+
   return (
     <div className="app">
       <header className="topbar">
         <div className="brand">
           <div className="brand__title">Gestionale Logistica Moda</div>
+          <div className="brand__controls">
+            <span className={isOnline ? "statusBadge statusBadge--online" : "statusBadge statusBadge--offline"}>{statusLabel}</span>
+            <button
+              type="button"
+              className="themeToggle"
+              onClick={() => setTheme((t) => (t === "dark" ? "light" : "dark"))}
+              aria-label="Cambia tema"
+              title="Cambia tema"
+            >
+              {theme === "dark" ? "Bianco" : "Nero"}
+            </button>
+          </div>
         </div>
 
         <nav className="nav">
