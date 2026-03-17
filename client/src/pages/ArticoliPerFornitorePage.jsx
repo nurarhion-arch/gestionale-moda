@@ -72,12 +72,12 @@ export default function ArticoliPerFornitorePage() {
 
   const colonne = useMemo(
     () => [
-      { key: "foto", label: "Foto", width: "35px" },
-      { key: "articolo", label: "Articolo", width: "74px" },
-      { key: "prodotto", label: "Prodotto", width: "1fr" },
-      { key: "prezzo", label: "Prezzo", width: "58px" },
-      { key: "quantita", label: "Q.tà", width: "44px" },
-      { key: "valore", label: "Valore", width: "72px" }
+      { key: "foto", label: "Foto", width: "var(--le-w-foto)" },
+      { key: "articolo", label: "Articolo", width: "var(--le-w-articolo)" },
+      { key: "prodotto", label: "Prodotto", width: "var(--le-w-prodotto)" },
+      { key: "prezzo", label: "Prezzo", width: "var(--le-w-prezzo)" },
+      { key: "quantita", label: "Q.tà", width: "var(--le-w-quantita)" },
+      { key: "valore", label: "Valore", width: "var(--le-w-valore)" }
     ],
     []
   );

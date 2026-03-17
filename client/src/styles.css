@@ -17,6 +17,14 @@
   --la-w-quantita: 36px;
   --la-w-prezzo: 70px;
   --la-w-totale: 70px;
+
+  /* Lista articoli (Excel): larghezze colonne (desktop) */
+  --le-w-foto: 35px;
+  --le-w-articolo: 74px;
+  --le-w-prodotto: 1fr;
+  --le-w-prezzo: 58px;
+  --le-w-quantita: 44px;
+  --le-w-valore: 72px;
 }
 
 html[data-theme="light"] {
@@ -692,7 +700,7 @@ input:focus {
 
 .listExcel__thead {
   display: grid;
-  grid-template-columns: 35px 74px 1fr 58px 44px 72px;
+  grid-template-columns: var(--le-w-foto) var(--le-w-articolo) var(--le-w-prodotto) var(--le-w-prezzo) var(--le-w-quantita) var(--le-w-valore);
   gap: 0;
   background: rgba(0, 0, 0, 0.2);
   border-bottom: 1px solid var(--border);
@@ -716,10 +724,10 @@ input:focus {
 
 .listExcel__tr {
   display: grid;
-  grid-template-columns: 35px 74px 1fr 58px 44px 72px;
+  grid-template-columns: var(--le-w-foto) var(--le-w-articolo) var(--le-w-prodotto) var(--le-w-prezzo) var(--le-w-quantita) var(--le-w-valore);
   gap: 0;
-  min-height: 75px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  min-height: 48px;
+  border-bottom: 1px solid var(--border);
 }
 
 .listExcel__tr:hover {
@@ -745,7 +753,7 @@ input:focus {
   align-items: flex-start;
   justify-content: center;
   align-content: flex-start;
-  height: 75px;
+  height: 48px;
   min-width: 0;
 }
 
@@ -865,10 +873,10 @@ input:focus {
 }
 
 .listExcel__varianti {
-  padding: 4px 6px 6px 35px;
+  padding: 2px 6px 4px var(--le-w-foto);
   font-size: 11px;
   color: var(--muted);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid var(--border);
   background: rgba(0, 0, 0, 0.08);
 }
 
@@ -892,8 +900,36 @@ input:focus {
   grid-template-columns: 36px 1fr 52px 48px 40px 36px;
   gap: 4px 6px;
   padding: 2px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  border-top: 1px solid var(--border);
   align-items: center;
+}
+
+/* Tema chiaro: righe/segmenti più visibili come in dark */
+html[data-theme="light"] .listExcel__thead {
+  background: rgba(10, 20, 40, 0.06);
+}
+
+html[data-theme="light"] .listExcel__varianti {
+  background: rgba(10, 20, 40, 0.04);
+}
+
+html[data-theme="light"] .listExcel__td {
+  border-right: 1px solid var(--border);
+}
+
+html[data-theme="light"] .listExcel__td--img {
+  border-right: 1px solid var(--border);
+}
+
+html[data-theme="light"] .listExcel__btnModificaArticolo {
+  color: rgba(10, 20, 40, 0.75);
+  background: rgba(10, 20, 40, 0.06);
+  border-color: rgba(10, 20, 40, 0.18);
+}
+
+html[data-theme="light"] .listExcel__btnModificaArticolo:hover {
+  background: rgba(10, 20, 40, 0.1);
+  border-color: rgba(10, 20, 40, 0.25);
 }
 
 .listExcel__vRowRemove {
@@ -1045,6 +1081,14 @@ input:focus {
     --la-w-quantita: 34px;
     --la-w-prezzo: 60px;
     --la-w-totale: 60px;
+
+    /* Lista articoli: più compatto a 360px */
+    --le-w-foto: 32px;
+    --le-w-articolo: 66px;
+    --le-w-prodotto: 1fr;
+    --le-w-prezzo: 54px;
+    --le-w-quantita: 36px;
+    --le-w-valore: 60px;
   }
 
   .listExcel__thead,
