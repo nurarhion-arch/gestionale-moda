@@ -22,6 +22,28 @@ html[data-theme="light"] {
   --success: #16a34a;
 }
 
+/* In tema chiaro i bottoni devono “staccare” sul bianco */
+html[data-theme="light"] .btn,
+html[data-theme="light"] .themeToggle,
+html[data-theme="light"] .nav__link {
+  background: rgba(10, 20, 40, 0.06);
+}
+
+html[data-theme="light"] .btn:hover,
+html[data-theme="light"] .themeToggle:hover,
+html[data-theme="light"] .nav__link:hover {
+  background: rgba(10, 20, 40, 0.1);
+}
+
+html[data-theme="light"] .nav__link--active {
+  border-color: rgba(91, 77, 255, 0.45);
+  background: rgba(91, 77, 255, 0.14);
+}
+
+html[data-theme="light"] .topbar {
+  background: rgba(246, 247, 251, 0.8);
+}
+
 * {
   box-sizing: border-box;
 }
