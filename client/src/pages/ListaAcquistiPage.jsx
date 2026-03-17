@@ -45,7 +45,7 @@ export default function ListaAcquistiPage() {
       const parsed = raw ? JSON.parse(raw) : null;
       if (Array.isArray(parsed) && parsed.length) return parsed;
     } catch (e) {}
-    return ["articolo", "colore", "taglia", "quantita", "prezzo", "totale"];
+    return ["foto", "articolo", "colore", "taglia", "quantita", "prezzo", "totale"];
   });
 
   useEffect(() => {
@@ -76,6 +76,7 @@ export default function ListaAcquistiPage() {
 
   const colonne = useMemo(
     () => [
+      { key: "foto", label: "Foto", width: "38px" },
       { key: "articolo", label: "Articolo", width: "90px" },
       { key: "colore", label: "Colore", width: "85px" },
       { key: "taglia", label: "Taglia", width: "32px" },
@@ -132,6 +133,7 @@ export default function ListaAcquistiPage() {
               <div className="listaAcquisti__tableWrap">
                 <div className="listaAcquisti__table">
                 <div className="listaAcquisti__thead" style={{ gridTemplateColumns }}>
+                  {isVisible("foto") ? <div className="listaAcquisti__th listaAcquisti__th--img" /> : null}
                   {isVisible("articolo") ? <div className="listaAcquisti__th">Articolo</div> : null}
                   {isVisible("colore") ? <div className="listaAcquisti__th listaAcquisti__th--colore">Colore</div> : null}
                   {isVisible("taglia") ? <div className="listaAcquisti__th listaAcquisti__th--center listaAcquisti__th--taglia">Taglia</div> : null}
@@ -145,6 +147,11 @@ export default function ListaAcquistiPage() {
                   const totaleRiga = prezzo * qty;
                   return (
                     <div key={`${r.codice_articolo}-${r.colore}-${r.taglia}-${idx}`} className="listaAcquisti__tr" style={{ gridTemplateColumns }}>
+                      {isVisible("foto") ? (
+                        <div className="listaAcquisti__td listaAcquisti__td--img">
+                          {r.foto_data_url ? <img className="listaAcquisti__thumb" src={r.foto_data_url} alt="" /> : <span className="listaAcquisti__noimg">—</span>}
+                        </div>
+                      ) : null}
                       {isVisible("articolo") ? <div className="listaAcquisti__td listaAcquisti__td--code">{r.codice_articolo || "—"}</div> : null}
                       {isVisible("colore") ? <div className="listaAcquisti__td listaAcquisti__td--colore">{coloreSuDueRighe(r.colore)}</div> : null}
                       {isVisible("taglia") ? (

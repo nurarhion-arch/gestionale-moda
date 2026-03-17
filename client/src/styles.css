@@ -1351,9 +1351,9 @@ input:focus {
   gap: 0;
   padding: 10px 14px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  align-items: center;
+  align-items: start;
   font-size: 13px;
-  min-height: 40px;
+  min-height: 0;
 }
 
 .listaAcquisti__tr:nth-child(even) {
@@ -1383,8 +1383,27 @@ input:focus {
   white-space: pre-line;
   word-wrap: break-word;
   overflow-wrap: break-word;
-  max-height: 2.6em;
-  overflow: hidden;
+  line-height: 1.15;
+}
+
+.listaAcquisti__td--img,
+.listaAcquisti__th--img {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.listaAcquisti__thumb {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+}
+
+.listaAcquisti__noimg {
+  color: var(--muted);
+  font-size: 11px;
 }
 
 .listaAcquisti__th--taglia,
