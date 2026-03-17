@@ -1,6 +1,4 @@
 {
-  "installCommand": "npm install && chmod +x node_modules/.bin/* 2>/dev/null || true",
-  "buildCommand": "npx vite build",
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ]
