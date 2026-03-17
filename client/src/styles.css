@@ -1851,12 +1851,13 @@ html[data-theme="light"] .alert--success {
   }
 
   .listExcel__btnModificaArticolo {
-    width: 32px;
-    height: 34px;
-    min-height: 34px;
-    padding: 4px;
-    align-items: center;
-    justify-content: center;
+    /* resta overlay sulla foto, non deve coprirla */
+    width: 18px;
+    height: 18px;
+    min-height: 18px;
+    padding: 0;
+    right: -1px;
+    bottom: -1px;
   }
 
   .listExcel__btnEliminaArticolo {
