@@ -1291,7 +1291,7 @@ input:focus {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 12px 14px;
+  padding: 8px 10px;
   border-bottom: 1px solid var(--border);
   background: rgba(0, 0, 0, 0.15);
 }
@@ -1307,8 +1307,8 @@ input:focus {
   font-weight: 700;
   color: #8cf599;
   font-size: 14px;
-  padding: 6px 12px;
-  border-radius: 10px;
+  padding: 4px 8px;
+  border-radius: 8px;
   background: rgba(16, 112, 43, 0.25);
   border: 1px solid rgba(140, 245, 153, 0.35);
 }
@@ -1322,7 +1322,7 @@ input:focus {
   display: grid;
   grid-template-columns: 90px 85px 32px 36px 70px;
   gap: 0;
-  padding: 10px 14px;
+  padding: 6px 10px;
   color: var(--muted);
   font-weight: 700;
   font-size: 10px;
@@ -1349,7 +1349,7 @@ input:focus {
   display: grid;
   grid-template-columns: 90px 85px 32px 36px 70px;
   gap: 0;
-  padding: 10px 14px;
+  padding: 4px 10px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   align-items: start;
   font-size: 13px;
@@ -1366,6 +1366,12 @@ input:focus {
 
 .listaAcquisti__td {
   color: var(--text);
+}
+
+/* Effetto Excel: celle più compatte */
+.listaAcquisti__th,
+.listaAcquisti__td {
+  padding: 0;
 }
 
 .listaAcquisti__td--center {
@@ -1430,6 +1436,41 @@ input:focus {
   font-weight: 700;
 }
 
+/* Modal (Colonne) leggibile in tema chiaro */
+html[data-theme="light"] .modalOverlay {
+  background: rgba(10, 20, 40, 0.35);
+}
+
+html[data-theme="light"] .modalCard {
+  background: rgba(255, 255, 255, 0.98);
+  color: var(--text);
+  border-color: var(--border);
+}
+
+html[data-theme="light"] .modalItem {
+  background: rgba(10, 20, 40, 0.04);
+  color: var(--text);
+}
+
+html[data-theme="light"] .modalItem:hover {
+  background: rgba(10, 20, 40, 0.08);
+}
+
+/* Verde troppo chiaro in tema bianco */
+html[data-theme="light"] .listaAcquisti__totale,
+html[data-theme="light"] .listaAcquisti__td--prezzo,
+html[data-theme="light"] .listaAcquisti__td--totale,
+html[data-theme="light"] .chip--value,
+html[data-theme="light"] .alert--success {
+  color: #0f7a33;
+}
+
+html[data-theme="light"] .listaAcquisti__totale,
+html[data-theme="light"] .chip--value,
+html[data-theme="light"] .alert--success {
+  background: rgba(15, 122, 51, 0.12);
+  border-color: rgba(15, 122, 51, 0.25);
+}
 .modalOverlay {
   position: fixed;
   inset: 0;
