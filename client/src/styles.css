@@ -764,6 +764,7 @@ input:focus {
   gap: 2px;
   width: 100%;
   min-width: 0;
+  position: relative;
 }
 
 .listExcel__thumb {
@@ -779,30 +780,31 @@ input:focus {
 }
 
 .listExcel__btnModificaArticolo {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  width: 30px;
-  height: 30px;
-  padding-top: 6px;
-  padding-bottom: 6px;
-  padding-left: 0;
-  padding-right: 0;
+  position: absolute;
+  right: -2px;
+  bottom: -2px;
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
   font-size: 10px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.85);
-  background: rgba(255, 255, 255, 0.14);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 4px;
-  box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.15);
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(11, 18, 32, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 6px;
+  box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.22);
   cursor: pointer;
-  transition: color 0.15s, background 0.15s, border-color 0.15s;
+  z-index: 2;
+  transition: color 0.15s, background 0.15s, border-color 0.15s, transform 0.15s;
 }
 
 .listExcel__btnModificaArticolo:hover {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.22);
-  border-color: rgba(255, 255, 255, 0.45);
+  transform: translateY(-1px);
+  background: rgba(11, 18, 32, 0.8);
+  border-color: rgba(255, 255, 255, 0.42);
 }
 
 .listExcel__btnModificaArticolo .listExcel__icon--pen {
@@ -924,14 +926,14 @@ html[data-theme="light"] .listExcel__td--img {
 html[data-theme="light"] .listExcel__btnModificaArticolo {
   display: flex;
   color: rgba(10, 20, 40, 0.75);
-  background: rgba(10, 20, 40, 0.06);
-  border-color: rgba(10, 20, 40, 0.18);
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(10, 20, 40, 0.22);
   box-shadow: 0px 4px 12px 0px rgba(10, 20, 40, 0.12);
 }
 
 html[data-theme="light"] .listExcel__btnModificaArticolo:hover {
-  background: rgba(10, 20, 40, 0.1);
-  border-color: rgba(10, 20, 40, 0.25);
+  background: rgba(255, 255, 255, 1);
+  border-color: rgba(10, 20, 40, 0.32);
 }
 
 html[data-theme="light"] .listExcel__btnEliminaArticolo {
