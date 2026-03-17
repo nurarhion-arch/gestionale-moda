@@ -922,14 +922,32 @@ html[data-theme="light"] .listExcel__td--img {
 }
 
 html[data-theme="light"] .listExcel__btnModificaArticolo {
+  display: flex;
   color: rgba(10, 20, 40, 0.75);
   background: rgba(10, 20, 40, 0.06);
   border-color: rgba(10, 20, 40, 0.18);
+  box-shadow: 0px 4px 12px 0px rgba(10, 20, 40, 0.12);
 }
 
 html[data-theme="light"] .listExcel__btnModificaArticolo:hover {
   background: rgba(10, 20, 40, 0.1);
   border-color: rgba(10, 20, 40, 0.25);
+}
+
+html[data-theme="light"] .listExcel__btnEliminaArticolo {
+  color: rgba(10, 20, 40, 0.75);
+  background: rgba(10, 20, 40, 0.06);
+  border-color: rgba(10, 20, 40, 0.18);
+}
+
+html[data-theme="light"] .listExcel__btnEliminaArticolo:hover {
+  color: var(--danger);
+  background: rgba(255, 77, 109, 0.14);
+  border-color: rgba(255, 77, 109, 0.35);
+}
+
+html[data-theme="light"] .listExcel__vRowRemove {
+  color: rgba(10, 20, 40, 0.75);
 }
 
 .listExcel__vRowRemove {
