@@ -726,8 +726,9 @@ input:focus {
   display: grid;
   grid-template-columns: var(--le-w-foto) var(--le-w-articolo) var(--le-w-prodotto) var(--le-w-prezzo) var(--le-w-quantita) var(--le-w-valore);
   gap: 0;
-  min-height: 48px;
+  min-height: 0;
   border-bottom: 1px solid var(--border);
+  align-items: start;
 }
 
 .listExcel__tr:hover {
@@ -735,11 +736,12 @@ input:focus {
 }
 
 .listExcel__td {
-  padding: 3px 6px;
+  padding: 2px 6px;
   border-right: 1px solid rgba(255, 255, 255, 0.06);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  line-height: 1.15;
 }
 
 .listExcel__td:last-child {
