@@ -186,7 +186,7 @@ export const api = {
     try {
       const { data: articoliRows, error: e1 } = await supabase
         .from("articoli")
-        .select("id, fornitore, art, prezzo, foto_url")
+        .select("id, fornitore, art, descrizione, prezzo, foto_url")
         .order("fornitore")
         .order("art");
       if (e1) handleError(e1);
@@ -217,6 +217,7 @@ export const api = {
         g.totale += prezzo * qty;
         g.righe.push({
           codice_articolo: a.codice_articolo ?? "",
+          prodotto: a.descrizione ?? "",
           foto_data_url: a.foto_data_url ?? null,
           colore: v.colore ?? "",
           taglia: v.taglia ?? "",

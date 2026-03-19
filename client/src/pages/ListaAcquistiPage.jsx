@@ -78,6 +78,7 @@ export default function ListaAcquistiPage() {
     () => [
       { key: "foto", label: "Foto", width: "var(--la-w-foto)" },
       { key: "articolo", label: "Articolo", width: "var(--la-w-articolo)" },
+      { key: "prodotto", label: "Prodotto", width: "var(--la-w-prodotto)" },
       { key: "colore", label: "Colore", width: "var(--la-w-colore)" },
       { key: "taglia", label: "Taglia", width: "var(--la-w-taglia)" },
       { key: "quantita", label: "Q.tà", width: "var(--la-w-quantita)" },
@@ -135,6 +136,7 @@ export default function ListaAcquistiPage() {
                 <div className="listaAcquisti__thead" style={{ gridTemplateColumns }}>
                   {isVisible("foto") ? <div className="listaAcquisti__th listaAcquisti__th--img" /> : null}
                   {isVisible("articolo") ? <div className="listaAcquisti__th">Articolo</div> : null}
+                  {isVisible("prodotto") ? <div className="listaAcquisti__th">Prodotto</div> : null}
                   {isVisible("colore") ? <div className="listaAcquisti__th listaAcquisti__th--colore">Colore</div> : null}
                   {isVisible("taglia") ? <div className="listaAcquisti__th listaAcquisti__th--center listaAcquisti__th--taglia">Taglia</div> : null}
                   {isVisible("quantita") ? <div className="listaAcquisti__th listaAcquisti__th--num">Q.tà</div> : null}
@@ -153,6 +155,7 @@ export default function ListaAcquistiPage() {
                         </div>
                       ) : null}
                       {isVisible("articolo") ? <div className="listaAcquisti__td listaAcquisti__td--code">{r.codice_articolo || "—"}</div> : null}
+                      {isVisible("prodotto") ? <div className="listaAcquisti__td">{r.prodotto || "—"}</div> : null}
                       {isVisible("colore") ? <div className="listaAcquisti__td listaAcquisti__td--colore">{coloreSuDueRighe(r.colore)}</div> : null}
                       {isVisible("taglia") ? (
                         <div className="listaAcquisti__td listaAcquisti__td--center listaAcquisti__td--taglia">{capitalize(r.taglia) || "—"}</div>
