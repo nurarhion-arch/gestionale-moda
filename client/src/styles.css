@@ -13,6 +13,7 @@
   --la-w-foto: 38px;
   --la-w-articolo: 90px;
   --la-w-prodotto: 110px;
+  --la-w-composizione: 110px;
   --la-w-colore: 85px;
   --la-w-taglia: 32px;
   --la-w-quantita: 36px;
@@ -1097,6 +1098,7 @@ html[data-theme="light"] .listExcel__vRowRemove {
     --la-w-foto: 32px;
     --la-w-articolo: 78px;
     --la-w-prodotto: 96px;
+    --la-w-composizione: 96px;
     --la-w-colore: 72px;
     --la-w-taglia: 30px;
     --la-w-quantita: 34px;
